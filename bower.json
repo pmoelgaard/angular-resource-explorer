@@ -1,0 +1,33 @@
+{
+  "name": "angular-resource-explorer",
+  "version": "0.0.0",
+  "authors": [
+    "Peter Andreas Moelgaard <github@petermolgaard.com>"
+  ],
+  "description": "angular-resource explorer with grid and forms",
+  "keywords": [
+    "angular",
+    "angular-resource",
+    "rest",
+    "forms",
+    "grid"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-formly": "~6.26.1",
+    "angular-material": "~0.10.1",
+    "angular-resource": "~1.4.5",
+    "angular-ui-grid": "~3.0.5",
+    "api-check": "~7.5.0",
+    "jquery": "~2.1.4",
+    "lodash": "~3.10.1"
+  }
+}

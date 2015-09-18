@@ -1,0 +1,26 @@
+form
+
+    ng-switch(ng-repeat="field in options.fieldDefs",on="field.type")
+
+        md-input-container(ng-switch-when="string")
+            label {{field.name}} ({{field.type}}) ({{options.data[field.name]}})
+            input(type="text",ng-model="options.data[field.name]",ng-required="field.required",min="field.min",max="field.max")
+
+        md-input-container(ng-switch-when="float")
+            label {{field.name}} ({{field.type}}) ({{options.data[field.name]}})
+            input(type="number",ng-model="options.data[field.name]",ng-required="field.required",min="field.min",max="field.max")
+
+        md-input-container(ng-switch-when="enum")
+            label {{field.name}} ({{field.type}}) ({{options.data[field.name]}})
+            md-select(ng-model="options.data[field.name]")
+                md-option(ng-repeat="fieldOption in field.options",value="{{fieldOption.value}}") {{fieldOption.name}}
+
+        div(ng-switch-when="relation")
+            ng-switch(on="field.scope.type")
+                md-input-container(ng-switch-when="belongsTo")
+                    label {{field.name}} ({{field.type}}, {{field.scope.type}}) ({{options.data[field.name]}})
+                    md-select(ng-model="options.data[field.name]")
+                        md-option(
+                            ng-repeat="fieldOption in ctrl.query(field.scope) track by fieldOption[field.scope.foreignKey]",
+                            value="{{fieldOption[field.scope.foreignKey]}}")
+                                | {{fieldOption[field.scope.labelField]}}

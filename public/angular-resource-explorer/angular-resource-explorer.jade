@@ -1,0 +1,19 @@
+div(layout="column")
+
+    div(layout="row",flex)
+
+        div(ng-if="!activeItem",flex,layout="row")
+            md-button(ng-click="ctrl.addItem()",class="md-raised") Add New
+
+        div(ng-if="activeItem",flex,layout="row")
+            md-button(ng-click="ctrl.addItemCancel()",class="md-raised") Cancel
+            md-button(ng-click="ctrl.saveItem(activeItem)",class="md-raised md-primary") Save
+            span(flex)
+            md-button(ng-click="ctrl.removeItem(activeItem, $event)",class="md-raised md-warn") Remove
+
+        //md-button(ng-if="newItem",ng-disabled="! newItem.isValid",ng-click="ctrl.addItemCommit()",class="md-raised") Submit
+
+    div(ui-grid="gridOptions",ui-grid-edit,ui-grid-selection,class="nx-are-grid",ng-if="!activeItem")
+    arm-form(ng-model="formOptions",ng-if="activeItem")
+
+    //div(ui-grid="gridOptionsNewItem",ui-grid-edit,class="nx-are-grid-new",ng-if="newItem")
