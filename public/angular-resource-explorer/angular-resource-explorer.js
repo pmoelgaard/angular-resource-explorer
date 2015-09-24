@@ -10,11 +10,11 @@ angular
         function ($log, $scope, $resource, $attrs) {
             var ctrl = this;
 
-            $attrs.$observe('dialogProvider', function($dialog) {
+            $attrs.$observe('dialogProvider', function ($dialog) {
                 $scope.dialogProvider = $scope.$parent.$eval($dialog);
             })
 
-            $attrs.$observe('translateProvider', function($translate) {
+            $attrs.$observe('translateProvider', function ($translate) {
                 $scope.translationProvider = $scope.$parent.$eval($translate);
             })
 
@@ -52,9 +52,10 @@ angular
 
             $scope.$watch('url', function () {
 
-                var specificationUrl = $scope.url + '/specification';
-                $scope.specificationEndpoint = $resource(specificationUrl);
-                $scope.specification = $scope.specificationEndpoint.get();
+                $scope.specificationEndpoint = $resource($scope.url + '/schema', null, {
+                    'schema': {method: 'POST'}
+                });
+                $scope.specification = $scope.specificationEndpoint.schema();
                 $scope.specification.$promise.then(function (specification) {
                     _.each(specification.properties, function (item) {
                         _.set(item, 'enableCellEdit', true)
@@ -107,19 +108,36 @@ angular
             }
 
             this.saveItem = function (item) {
-                return this.updateItem(item);
+                var id = _.get(item, $scope.specification.idField);
+                if (id) {
+                    this.updateItem(item);
+                }
+                else {
+                    $scope.updateEndpoint.save(item)
+                        .$promise.then(
+                        function (saveResult) {
+                            _.extend(item, saveResult);
+                            console.log(saveResult);
+                        },
+                        function (err) {
+                            $scope.$error = err;
+                        });
+                }
             }
 
             this.updateItem = function (item) {
+                var id = _.get(item, $scope.specification.idField);
+                if (!id) {
+                    return $scope.$error = new Error('ID needs to be set when calling update');
+                }
                 var query = {
-                    id: _.get(item, $scope.specification.idField)
+                    id: id
                 }
                 $scope.updateEndpoint.update(query, item)
                     .$promise.then(function (updateResult) {
                         console.log(updateResult);
                     });
             }
-
 
             this.removeItem = function (item, $event) {
 

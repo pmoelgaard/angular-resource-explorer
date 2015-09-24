@@ -11,7 +11,7 @@ angular
 
             $http.defaults.headers.common['Authorization'] = '1e69ac19-0636-4774-82c3-8f770b89be16';
 
-            var demoUrl = '//localhost:8000/api/alarms';
+            var demoUrl = '//localhost:8000/api/admin/users';
             $scope.demoUrl = demoUrl;
 
             $scope.$dialog = $dialogProvider;
