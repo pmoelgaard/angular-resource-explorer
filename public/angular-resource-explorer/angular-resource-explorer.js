@@ -58,7 +58,7 @@ angular
                 $scope.specification = $scope.specificationEndpoint.schema();
                 $scope.specification.$promise.then(function (specification) {
                     _.each(specification.properties, function (item) {
-                        _.set(item, 'enableCellEdit', true)
+                        _.set(item, 'enableCellEdit', !item.readonly);
                     });
                     $scope.gridOptions.columnDefs = specification.properties;
                     $scope.formOptions.fieldDefs = specification.properties;
@@ -140,7 +140,6 @@ angular
             }
 
             this.removeItem = function (item, $event) {
-
                 var confirm = $scope.dialogProvider.confirm()
                     .title($scope.translationProvider.DELETE_CONFIRM_TITLE)
                     .content($scope.translationProvider.DELETE_CONFIRM_CONTENT)
@@ -154,9 +153,14 @@ angular
                             id: _.get(item, $scope.specification.idField)
                         }
                         $scope.updateEndpoint.remove(query)
-                            .$promise.then(function (updateResult) {
-                                console.log(updateResult);
-                            });
+                            .$promise.then(
+                            function () {
+                                $scope.activeItem = null;
+                            },
+                            function (err) {
+                                $scope.$error = err;
+                            }
+                        );
                     }
                 )
             }
