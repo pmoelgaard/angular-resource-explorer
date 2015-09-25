@@ -78,28 +78,31 @@ angular
                     });
             })
 
-            $scope.$watch('activeItem', function () {
+            $scope.$watch('activeItem', function (activeItem) {
+
+                if (activeItem && !activeItem.hasOwnProperty('isValid')) {
+                    Object.defineProperty(activeItem, 'isValid', {
+                        get: function () {
+                            var isValid = _.every($scope.specification.properties, function (property) {
+                                if (!_.has(property, 'required') || !_.get(property, 'required')) {
+                                    return true;
+                                }
+                                var value = _.get(this, property.name);
+                                var isValid = !_.isUndefined(value) && !_.isNull(value);
+                                // do custom validation
+                                return isValid;
+                            }, this);
+                            return isValid;
+                        }
+                    }, activeItem);
+                }
+
                 $scope.formOptions.data = $scope.activeItem;
             })
 
 
             this.addItem = function () {
-
                 var activeItem = {};
-                Object.defineProperty(activeItem, 'isValid', {
-                    get: function () {
-                        var isValid = _.every($scope.specification.properties, function (property) {
-                            if (!_.has(property, 'required') || !_.get(property, 'required')) {
-                                return true;
-                            }
-                            var value = _.get(this, property.name);
-                            var isValid = !_.isUndefined(value) && !_.isNull(value);
-                            // do custom validation
-                            return isValid;
-                        }, this);
-                        return isValid;
-                    }
-                }, activeItem);
                 $scope.activeItem = activeItem;
             }
 
@@ -116,8 +119,15 @@ angular
                     $scope.updateEndpoint.save(item)
                         .$promise.then(
                         function (saveResult) {
+
+                            // we amend our local object, in case we get new properties set from the server (e.g. ID)
                             _.extend(item, saveResult);
-                            console.log(saveResult);
+
+                            // we add it to the local collection of items
+                            $scope.queryContents.push(item);
+
+                            // then we nullify this which will return to the grid
+                            $scope.activeItem = null;
                         },
                         function (err) {
                             $scope.$error = err;
@@ -134,8 +144,12 @@ angular
                     id: id
                 }
                 $scope.updateEndpoint.update(query, item)
-                    .$promise.then(function (updateResult) {
-                        console.log(updateResult);
+                    .$promise.then(
+                    function () {
+                        $scope.activeItem = null;
+                    },
+                    function (err) {
+                        $scope.$error = err;
                     });
             }
 

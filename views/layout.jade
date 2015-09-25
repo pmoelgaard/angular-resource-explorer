@@ -1,33 +1,31 @@
 doctype html
 html(ng-app="NxNgResourceExplorerDemo",ng-controller="AppCtrl")
-  head
+    head
 
-    title= title
+        title Angular Resource Explorer (DEMO)
 
-    link(rel='stylesheet', href='/stylesheets/style.css')
+        script(src="/libs/jquery/dist/jquery.js")
+        script(src="/libs/lodash/lodash.js")
 
-    script(src="/libs/jquery/dist/jquery.js")
-    script(src="/libs/lodash/lodash.js")
+        script(src="/libs/angular/angular.js")
+        script(src="/libs/angular-animate/angular-animate.js")
+        script(src="/libs/angular-aria/angular-aria.js")
+        script(src="/libs/angular-resource/angular-resource.js")
 
-    script(src="/libs/angular/angular.js")
-    script(src="/libs/angular-animate/angular-animate.js")
-    script(src="/libs/angular-aria/angular-aria.js")
-    script(src="/libs/angular-resource/angular-resource.js")
+        link(rel='stylesheet', href='/libs/angular-material/angular-material.css')
+        script(src="/libs/angular-material/angular-material.js")
 
-    link(rel='stylesheet', href='/libs/angular-material/angular-material.css')
-    script(src="/libs/angular-material/angular-material.js")
+        script(src="/libs/angular-ui-grid/ui-grid.js")
+        link(rel='stylesheet', href='/libs/angular-ui-grid/ui-grid.css')
 
-    script(src="/libs/angular-ui-grid/ui-grid.js")
-    link(rel='stylesheet', href='/libs/angular-ui-grid/ui-grid.css')
+        script(src="/libs/api-check/dist/api-check.js")
+        script(src="/libs/angular-formly/dist/formly.js")
 
-    script(src="/libs/api-check/dist/api-check.js")
-    script(src="/libs/angular-formly/dist/formly.js")
+        link(rel='stylesheet', href='/angular-resource-explorer/angular-resource-explorer.css')
+        script(src="/angular-resource-explorer/angular-resource-explorer.js")
+        script(src="/angular-resource-explorer/angular-resource-explorer.form.js")
 
-    link(rel='stylesheet', href='/angular-resource-explorer/angular-resource-explorer.css')
-    script(src="/angular-resource-explorer/angular-resource-explorer.js")
-    script(src="/angular-resource-explorer/angular-resource-explorer.form.js")
+        script(src="/javascripts/app.js")
 
-    script(src="/javascripts/app.js")
-
-  body
-    block content
+    body
+        block content
