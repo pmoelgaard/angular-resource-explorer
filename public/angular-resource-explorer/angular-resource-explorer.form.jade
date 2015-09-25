@@ -3,28 +3,28 @@ form
     ng-switch(ng-repeat="field in options.fieldDefs",on="field.type")
 
         md-input-container(ng-switch-when="string",ng-hide="field.visible === false")
-            label {{field.name}} ({{field.type}}) ({{options.data[field.name]}})
+            label {{field.name}}
             input(type="text",ng-model="options.data[field.name]",ng-required="field.required",min="field.min",max="field.max")
 
         md-input-container(ng-switch-when="password")
-            label {{field.name}} ({{field.type}}) ({{options.data[field.name]}})
+            label {{field.name}}
             input(type="password",ng-model="options.data[field.name]",ng-required="field.required")
 
         md-input-container(ng-switch-when="integer")
-            label {{field.name}} ({{field.type}}) ({{options.data[field.name]}})
+            label {{field.name}}
             input(type="number",ng-model="options.data[field.name]",ng-required="field.required",min="field.min",max="field.max")
 
         md-input-container(ng-switch-when="float")
-            label {{field.name}} ({{field.type}}) ({{options.data[field.name]}})
+            label {{field.name}}
             input(type="number",ng-model="options.data[field.name]",ng-required="field.required",min="field.min",max="field.max")
 
         md-input-container(ng-switch-when="enum")
-            label {{field.name}} ({{field.type}}) ({{options.data[field.name]}})
+            label {{field.name}}
             md-select(ng-model="options.data[field.name]")
                 md-option(ng-repeat="fieldOption in field.options",value="{{fieldOption.value}}") {{fieldOption.name}}
 
         md-input-container(ng-switch-when="boolean")
-            label {{field.name}} ({{field.type}}) ({{options.data[field.name]}})
+            label {{field.name}}
             input(type="checkbox",ng-model="options.data[field.name]")
 
         div(ng-switch-when="relation")

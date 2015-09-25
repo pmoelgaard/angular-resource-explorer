@@ -1,4 +1,4 @@
-### WARNING: This document is still in progress !
+### WARNING: This document is still in progress, the project is still just a concept and exploration at this point !
 
 <br/>
 
@@ -32,5 +32,7 @@
  
  - string
  - float
+ - integer
+ - boolean
  - enum
- - relation
+ - relation (belongsTo)

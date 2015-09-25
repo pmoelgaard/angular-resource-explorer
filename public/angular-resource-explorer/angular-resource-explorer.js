@@ -15,7 +15,18 @@ angular
             })
 
             $attrs.$observe('translateProvider', function ($translate) {
-                $scope.translationProvider = $scope.$parent.$eval($translate);
+                $scope.translateProvider = $scope.$parent.$eval($translate);
+                $scope.translateProvider([
+                    'DELETE_CONFIRM_TITLE',
+                    'DELETE_CONFIRM_CONTENT',
+                    'DELETE_CONFIRM_TITLE',
+                    'DELETE_CONFIRM_OK',
+                    'DELETE_CONFIRM_CANCEL'
+                ]).then(
+                    function (texts) {
+                        $scope.texts = texts;
+                    }
+                );
             })
 
             $scope.activeItem = null;
@@ -37,7 +48,7 @@ angular
                 $scope.gridApi = gridApi;
 
                 if (gridApi.edit) {
-                    gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                    gridApi.edit.on.afterCellEdit($scope, function (rowEntity) {
                         ctrl.updateItem(rowEntity);
                         $scope.$apply();
                     });
@@ -155,12 +166,12 @@ angular
 
             this.removeItem = function (item, $event) {
                 var confirm = $scope.dialogProvider.confirm()
-                    .title($scope.translationProvider.DELETE_CONFIRM_TITLE)
-                    .content($scope.translationProvider.DELETE_CONFIRM_CONTENT)
-                    .ariaLabel($scope.translationProvider.DELETE_CONFIRM_TITLE)
+                    .title($scope.texts.DELETE_CONFIRM_TITLE)
+                    .content($scope.texts.DELETE_CONFIRM_CONTENT)
+                    .ariaLabel($scope.texts.DELETE_CONFIRM_TITLE)
                     .targetEvent($event)
-                    .ok($scope.translationProvider.DELETE_CONFIRM_OK)
-                    .cancel($scope.translationProvider.DELETE_CONFIRM_CANCEL);
+                    .ok($scope.texts.DELETE_CONFIRM_OK)
+                    .cancel($scope.texts.DELETE_CONFIRM_CANCEL);
                 $scope.dialogProvider.show(confirm).then(
                     function () {
                         var query = {
