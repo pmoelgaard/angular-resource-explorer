@@ -1,9 +1,16 @@
 {
   "name": "angular-resource-explorer",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
   "scripts": {
     "start": "node ./bin/www"
+  },
+  "author": {
+    "name": "Peter Andreas Moelgaard",
+    "email": "admin@petermolgaard.com"
+  },
+  "repository": {
+    "type": "Git",
+    "url": "https://github.com/pmoelgaard/angular-resource-explorer.git"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
